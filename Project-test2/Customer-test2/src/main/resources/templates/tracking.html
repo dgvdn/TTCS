@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<!-- Basic -->
+
+<head th:replace="fragments::head">
+	<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+	<!-- Start Main Top -->
+	<div th:replace="fragments::main-top">
+	</div>
+	<!-- End Main Top -->
+
+	<!-- Start Main Top -->
+	<header class="main-top">
+		<div th:replace="fragments::main-header"></div>
+		<!-- Start Navigation -->
+
+	</header>
+	<!-- End Main Top -->
+
+	<!-- Start Top Search -->
+	<div th:replace="fragments::top-search">
+	</div>
+	<!-- End Top Search -->
+
+	<!-- Start Slider -->
+	<div th:replace="fragments::slider">
+	</div>
+	<!-- End Slider -->
+	<!-- End All Title Box -->
+
+	<!-- Start Cart  -->
+	<div class="cart-box-main">
+		<div class="container">
+
+			<div class="row">
+				<div class="col-lg-12">
+					<div th:if="${check}" class="text-center alter-warning">
+						<p th:text="${check}"></p>
+					</div>
+					<div class="table-main table-responsive" th:if="${check}==null">
+
+						<table class="table">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Thời điểm đặt hàng</th>
+									<th>Thời gian giao hàng dự kiến</th>
+									<th>Tổng tiền</th>
+									<th>Trạng thái</th>
+									<th>Chi tiết</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="order : ${orders}">
+									<td class="thumbnail-img">
+										<p th:text="${order.id}"></p>
+									</td>
+									<td class="name-pr">
+										<p th:text="${order.orderDate}"></p>
+									</td>
+									<td>
+										<p th:text="${order.deliveryDate}"></p>
+									</td>
+									<td class="price-pr">
+										<p><span th:inline="text">[[${#numbers.formatDecimal(order.totalPrice,
+												0, 'COMMA',
+												0,
+												'POINT')}]] ₫</span></p>
+									</td>
+									<td class="quantity-box">
+										<p th:text="${order.orderStatus}"></p>
+									</td>
+									<td>
+										<div class="col-12 d-flex shopping-box"><a
+												th:href="@{/orderDetail/{id}(id = ${order.id})}"
+												class="ml-auto btn hvr-hover">Kiểm tra</a> </div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
+					</div>
+				</div>
+			</div>
+			<!-- chuyển trạng thái đơn hàng sau 12h 
+			<div class="row my-5" th:if="${check} == null">
+				<div class="col-12 d-flex shopping-box"><a th:href="@{/updateStatus}" class="ml-auto btn hvr-hover">Cập nhật trạng thái đơn hàng</a> </div>
+			</div>
+			-->
+		</div>
+	</div>
+	<!-- End Cart -->
+
+	<div th:replace="fragments::instagram-box">
+	</div>
+
+	<!-- End Feed  -->
+
+	<!-- Start Footer  -->
+	<footer th:replace="fragments::footer">
+	</footer>
+
+
+	<!-- ALL JS FILES -->
+	<div th:replace="fragments::script"></div>
+
+</body>
+
+</html>

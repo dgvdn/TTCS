@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<!-- Basic -->
+
+<head th:replace="fragments::head">
+	<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+	<!-- Start Main Top -->
+	<div th:replace="fragments::main-top">
+	</div>
+	<!-- End Main Top -->
+
+	<!-- Start Main Top -->
+	<header class="main-top">
+		<div th:replace="fragments::main-header"></div>
+		<!-- Start Navigation -->
+
+	</header>
+	<!-- End Main Top -->
+
+	<!-- Start Top Search -->
+	<div th:replace="fragments::top-search">
+	</div>
+	<!-- End Top Search -->
+
+	<!-- Start Slider -->
+	<div th:replace="fragments::slider">
+	</div>
+	<!-- End Slider -->
+	<!-- End All Title Box -->
+
+	<!-- Start Cart  -->
+	<div class="cart-box-main">
+		<div class="container">
+
+			<div class="row">
+				<div class="col-lg-12">
+					<div th:if="${check}" class="text-center alter-warning">
+						<p th:text="${check}"></p>
+					</div>
+					<div class="table-main table-responsive" th:if="${check}==null">
+
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Hình ảnh</th>
+									<th>Tên sản phẩm</th>
+									<th>Giảm giá</th>
+									<th>Giá</th>
+									<th>Số lượng</th>
+									<th>Tổng tiền</th>
+									<th>Xóa</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="cartItem : ${shoppingCart.cartItem}">
+									<td class="thumbnail-img">
+										<a href="#">
+											<img class="img-fluid"
+												th:src="*{'data:image/jpeg;base64,' + cartItem.product.image}" alt="" />
+										</a>
+									</td>
+									<td class="name-pr">
+										<p th:text="${cartItem.product.name}"></p>
+									</td>
+									<td>
+										<p><span th:inline="text">[[${#numbers.formatDecimal(cartItem.product.discount,
+												0,
+												'COMMA', 0,
+												'POINT')}]] %</span></p>
+									</td>
+									<td class="price-pr">
+										<p><span th:inline="text">[[${#numbers.formatDecimal(cartItem.product.costPrice,
+												0, 'COMMA',
+												0,
+												'POINT')}]] ₫</span></p>
+									</td>
+									<form th:action="@{/updateShoppingCart}" method="post">
+										<input type="hidden" th:value="${cartItem.id}" name="item_id" />
+										<td class="quantity-box"><input type="number" size="4" name="quantity"
+												th:value="${cartItem.quantity}" min="0" step="1"
+												class="c-input-text qty text"></td>
+										<input type="submit" hidden>
+									</form>
+									<td class="total-pr">
+										<p><span th:inline="text">[[${#numbers.formatDecimal(cartItem.totalPrice,
+												0, 'COMMA',
+												0,
+												'POINT')}]] ₫</span></p>
+									</td>
+									<td class="remove-pr">
+										<a th:href="@{/removeCartItem/{id} (id = ${cartItem.id})}">
+											<i class="fas fa-times"></i>
+										</a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
+					</div>
+				</div>
+			</div>
+
+			<div class="row my-5">
+				<div class="col-lg-6 col-sm-6">
+					<div class="coupon-box">
+						<div class="input-group input-group-sm">
+							<input class="form-control" placeholder="Nhập mã giảm giá" aria-label="Coupon code"
+								type="text">
+							<div class="input-group-append">
+								<button class="btn btn-theme" type="button">Áp dụng</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="row my-5" th:if="${check} == null">
+				<div class="col-lg-8 col-sm-12"></div>
+				<div class="col-lg-4 col-sm-12">
+					<div class="order-box">
+						<h3>Đơn hàng</h3>
+						<div class="d-flex">
+							<h4>Tổng cộng</h4>
+							<div class="ml-auto font-weight-bold"><span
+									th:inline="text">[[${#numbers.formatDecimal(subTotal,
+									0, 'COMMA',
+									0,
+									'POINT')}]] ₫</span></div>
+						</div>
+						<div class="d-flex">
+							<h4>Giảm giá</h4>
+							<div class="ml-auto font-weight-bold"><span
+									th:inline="text">[[${#numbers.formatDecimal(discount,
+									0, 'COMMA',
+									0,
+									'POINT')}]] ₫</span></div>
+						</div>
+						<hr class="my-1">
+						<div class="d-flex">
+							<h4>Mã giảm giá</h4>
+							<div class="ml-auto font-weight-bold"> 0₫ </div>
+						</div>
+						<div class="d-flex">
+							<h4>Phí vận chuyển</h4>
+							<div class="ml-auto font-weight-bold"> Miễn phí </div>
+						</div>
+						<hr>
+						<div class="d-flex gr-total">
+							<h5>Thành tiền</h5>
+							<div class="ml-auto h5"> <span
+									th:inline="text">[[${#numbers.formatDecimal(shoppingCart.totalPrices,
+									0, 'COMMA',
+									0,
+									'POINT')}]] ₫</span></div>
+						</div>
+						<hr>
+					</div>
+				</div>
+				<div class="col-12 d-flex shopping-box"><a th:href="@{/checkout}" class="ml-auto btn hvr-hover">Thanh
+						toán</a> </div>
+			</div>
+
+		</div>
+	</div>
+	<!-- End Cart -->
+
+	<div th:replace="fragments::instagram-box">
+	</div>
+
+	<!-- End Feed  -->
+
+	<!-- Start Footer  -->
+	<footer th:replace="fragments::footer">
+	</footer>
+
+
+	<!-- ALL JS FILES -->
+	<div th:replace="fragments::script"></div>
+
+</body>
+
+</html>

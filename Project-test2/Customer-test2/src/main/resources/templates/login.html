@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Basic -->
+
+<head th:replace="fragments::head">
+	<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+	<!-- Start Main Top -->
+	<div th:replace="fragments::main-top">
+	</div>
+	<!-- End Main Top -->
+
+	<!-- Start Main Top -->
+
+	<!-- End Main Top -->
+
+	<!-- Start Top Search -->
+	<div class="top-search">
+		<div class="container">
+			<div class="input-group">
+				<span class="input-group-addon"><i class="fa fa-search"></i></span>
+				<input type="text" class="form-control" placeholder="Search">
+				<span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
+			</div>
+		</div>
+	</div>
+	<!-- End Top Search -->
+
+	<!-- Start All Title Box -->
+	<!-- End All Title Box -->
+
+	<section id="login-form">
+		<div class="noi-dung">
+			<div class="form">
+				<h2>Đăng nhập</h2>
+				<div th:if="${param.error}" class="alert alert-danger text-center">
+					Email hoặc mật khẩu không hợp lệ!
+				</div>
+				<div th:if="${param.logout}" class="alert alert-success text-center">
+					Bạn đã đăng xuất!
+				</div>
+				<form th:action="@{/do-login}" method="post">
+					<div class="input-form">
+						<!-- <span>User name</span> -->
+						<input type="text" placeholder="Email" name="username" class="form-control form-control-user"
+							id="username">
+					</div>
+					<div class="input-form">
+						<!-- <span>Password</span> -->
+						<input type="password" placeholder="Mật khẩu" name="password" id="password">
+					</div>
+					<div class="Remember-me">
+						<label><input type="checkbox" name="submit"> Nhớ mật khẩu</label>
+					</div>
+					<div class="input-form">
+						<input type="submit" value="Đăng nhập">
+					</div>
+					<div class="input-form">
+						<p>Chưa có tài khoản ? <a th:href="@{/register}">Đăng ký ngay</a></p>
+					</div>
+					<div class="input-form">
+						<p><a th:href="@{/home}">Trở về trang chủ</a></p>
+					</div>
+				</form>
+
+			</div>
+		</div>
+		<!-- Start copyright  -->
+
+	</section>
+
+	<!-- Start copyright  -->
+
+	<!-- End copyright  -->
+
+	<a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
+
+	<!-- ALL JS FILES -->
+	<div th:replace="fragments::script"></div>
+</body>
+
+</html>
