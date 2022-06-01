@@ -20,7 +20,6 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public Customer findByUsername(String username) {
-		// TODO Auto-generated method stub
 		return customerRepository.findByUsername(username);
 	}
 

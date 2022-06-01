@@ -151,6 +151,7 @@ public class ProductServiceImpl implements ProductService {
 		return new PageImpl(subList, pageable, list.size());
 	}
 
+	// product to productDto
 	private List<ProductDto> transfer(List<Product> products) {
 		List<ProductDto> productDtoList = new ArrayList<>();
 		for (Product product : products) {
@@ -206,13 +207,11 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public List<Product> findByOrderBySalePriceAsc() {
-		// TODO Auto-generated method stub
 		return productRepository.findByOrderBySalePriceAsc();
 	}
 
 	@Override
 	public List<Product> findByOrderBySalePriceDesc() {
-		// TODO Auto-generated method stub
 		return productRepository.findByOrderBySalePriceDesc();
 	}
 

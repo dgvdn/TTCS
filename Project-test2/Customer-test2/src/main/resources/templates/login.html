@@ -37,37 +37,40 @@
 	<section id="login-form">
 		<div class="noi-dung">
 			<div class="form">
-				<h2>Đăng nhập</h2>
-				<div th:if="${param.error}" class="alert alert-danger text-center">
-					Email hoặc mật khẩu không hợp lệ!
+				<div class="bg-white rounded p-4 p-sm-5 my-4 mx-3">
+					<div class="d-flex align-items-center justify-content-center mb-3">
+						<h2>Đăng nhập</h2>
+					</div>
+					<div th:if="${param.error}" class="alert alert-danger text-center">
+						Email hoặc mật khẩu không hợp lệ!
+					</div>
+					<div th:if="${param.logout}" class="alert alert-success text-center">
+						Bạn đã đăng xuất!
+					</div>
+					<form th:action="@{/do-login}" method="post">
+						<div class="input-form">
+							<!-- <span>User name</span> -->
+							<input type="text" placeholder="Email" name="username"
+								class="form-control form-control-user" id="username">
+						</div>
+						<div class="input-form">
+							<!-- <span>Password</span> -->
+							<input type="password" placeholder="Mật khẩu" name="password" id="password">
+						</div>
+						<div class="Remember-me">
+							<label><input type="checkbox" name="submit"> Nhớ mật khẩu</label>
+						</div>
+						<div class="input-form">
+							<input type="submit" value="Đăng nhập">
+						</div>
+						<div class="input-form">
+							<p>Chưa có tài khoản ? <a th:href="@{/register}">Đăng ký ngay</a></p>
+						</div>
+						<div class="input-form">
+							<p><a th:href="@{/home}">Trở về trang chủ</a></p>
+						</div>
+					</form>
 				</div>
-				<div th:if="${param.logout}" class="alert alert-success text-center">
-					Bạn đã đăng xuất!
-				</div>
-				<form th:action="@{/do-login}" method="post">
-					<div class="input-form">
-						<!-- <span>User name</span> -->
-						<input type="text" placeholder="Email" name="username" class="form-control form-control-user"
-							id="username">
-					</div>
-					<div class="input-form">
-						<!-- <span>Password</span> -->
-						<input type="password" placeholder="Mật khẩu" name="password" id="password">
-					</div>
-					<div class="Remember-me">
-						<label><input type="checkbox" name="submit"> Nhớ mật khẩu</label>
-					</div>
-					<div class="input-form">
-						<input type="submit" value="Đăng nhập">
-					</div>
-					<div class="input-form">
-						<p>Chưa có tài khoản ? <a th:href="@{/register}">Đăng ký ngay</a></p>
-					</div>
-					<div class="input-form">
-						<p><a th:href="@{/home}">Trở về trang chủ</a></p>
-					</div>
-				</form>
-
 			</div>
 		</div>
 		<!-- Start copyright  -->

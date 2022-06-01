@@ -25,8 +25,9 @@
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
 					<div>
-						<form th:action="@{/search-result/0}" method="get">
-							<input type="text" id="search" name="keyword" placeholder="Nhập sản phẩm...">
+						<form th:action="@{/search-result/0}" method="get" class="d-none d-md-flex ms-4">
+							<input type="text" id="search" name="keyword" placeholder="Nhập sản phẩm..."
+								class="form-control border-0">
 							<button type="submit" class="btn btn-primary">Tìm</button>
 						</form>
 					</div>
@@ -47,7 +48,6 @@
 								<th scope="col">Danh mục</th>
 								<th scope="col">Giá</th>
 								<th scope="col">Giảm giá</th>
-								<th scope="col">Giá khuyến mại</th>
 								<th scope="col">Số lượng</th>
 								<th scope="col">Ảnh</th>
 								<th scope="col">Cập nhật</th>
@@ -62,8 +62,6 @@
 										'POINT')}]] ₫</span></td>
 								<td><span th:inline="text">[[${#numbers.formatDecimal(product.discount, 0, 'COMMA', 0,
 										'POINT')}]] %</span></td>
-								<td><span th:inline="text">[[${#numbers.formatDecimal(product.salePrice, 0, 'COMMA', 0,
-										'POINT')}]] ₫</span></td>
 								<td th:text="${product.currentQuantity}"></td>
 								<td><img src="" style="height: 40px; width: 40px;"
 										th:src="*{'data:image/jpeg;base64,' + {product.image}}"></td>

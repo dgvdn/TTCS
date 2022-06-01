@@ -44,46 +44,159 @@
 						<p th:text="${check}"></p>
 					</div>
 					<div class="table-main table-responsive" th:if="${check}==null">
+						<div class="card-body">
+							<div class="default-tab">
+								<nav>
+									<div class="nav nav-tabs" id="nav-tab" role="tablist">
+										<a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab"
+											href="#nav-home" role="tab" aria-controls="nav-home"
+											aria-selected="true">Đang chuẩn bị <span class="badge badge-warning"
+												th:text="${#lists.size(orders.?[orderStatus == 'Đơn hàng của bạn đang được chuẩn bị.'])}"></span></a>
+										<a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab"
+											href="#nav-profile" role="tab" aria-controls="nav-profile"
+											aria-selected="false">Đang giao <span class="badge badge-info"
+												th:text="${#lists.size(orders.?[orderStatus == 'Đơn hàng đang được vận chuyển.'])}"></span></a>
+										<a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab"
+											href="#nav-contact" role="tab" aria-controls="nav-contact"
+											aria-selected="false">Hoàn thành <span class="badge badge-success"
+												th:text="${#lists.size(orders.?[orderStatus == 'Đơn hàng đã hoàn thành.'])}"></span></a>
+									</div>
+								</nav>
+								<div class="tab-content pl-3 pt-2" id="nav-tabContent">
+									<div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+										aria-labelledby="nav-home-tab">
+										<table class="table">
+											<thead>
+												<tr>
+													<th>ID</th>
+													<th>Thời điểm đặt hàng</th>
+													<th>Thời gian giao hàng dự kiến</th>
+													<th>Tổng tiền</th>
+													<th>Trạng thái</th>
+													<th>Chi tiết</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="order : ${orders}"
+													th:if="${order.orderStatus == 'Đơn hàng của bạn đang được chuẩn bị.'}">
+													<td class="thumbnail-img">
+														<p th:text="${order.id}"></p>
+													</td>
+													<td class="name-pr">
+														<p th:text="${order.orderDate}"></p>
+													</td>
+													<td>
+														<p th:text="${order.deliveryDate}"></p>
+													</td>
+													<td class="price-pr">
+														<p><span th:inline="text">[[${#numbers.formatDecimal(order.totalPrice,
+																0, 'COMMA',
+																0,
+																'POINT')}]] ₫</span></p>
+													</td>
+													<td class="quantity-box">
+														<p th:text="${order.orderStatus}"></p>
+													</td>
+													<td>
+														<div class="col-12 d-flex shopping-box"><a
+																th:href="@{/orderDetail/{id}(id = ${order.id})}"
+																class="ml-auto btn hvr-hover">Kiểm tra</a> </div>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<div class="tab-pane fade" id="nav-profile" role="tabpanel"
+										aria-labelledby="nav-profile-tab">
+										<table class="table">
+											<thead>
+												<tr>
+													<th>ID</th>
+													<th>Thời điểm đặt hàng</th>
+													<th>Thời gian giao hàng dự kiến</th>
+													<th>Tổng tiền</th>
+													<th>Trạng thái</th>
+													<th>Chi tiết</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="order : ${orders}"
+													th:if="${order.orderStatus == 'Đơn hàng đang được vận chuyển.'}">
+													<td class="thumbnail-img">
+														<p th:text="${order.id}"></p>
+													</td>
+													<td class="name-pr">
+														<p th:text="${order.orderDate}"></p>
+													</td>
+													<td>
+														<p th:text="${order.deliveryDate}"></p>
+													</td>
+													<td class="price-pr">
+														<p><span th:inline="text">[[${#numbers.formatDecimal(order.totalPrice,
+																0, 'COMMA',
+																0,
+																'POINT')}]] ₫</span></p>
+													</td>
+													<td class="quantity-box">
+														<p th:text="${order.orderStatus}"></p>
+													</td>
+													<td>
+														<div class="col-12 d-flex shopping-box"><a
+																th:href="@{/orderDetail/{id}(id = ${order.id})}"
+																class="ml-auto btn hvr-hover">Kiểm tra</a> </div>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<div class="tab-pane fade" id="nav-contact" role="tabpanel"
+										aria-labelledby="nav-contact-tab">
+										<table class="table">
+											<thead>
+												<tr>
+													<th>ID</th>
+													<th>Thời điểm đặt hàng</th>
+													<th>Thời điểm nhận hàng</th>
+													<th>Tổng tiền</th>
+													<th>Trạng thái</th>
+													<th>Chi tiết</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="order : ${orders}"
+													th:if="${order.orderStatus == 'Đơn hàng đã hoàn thành.'}">
+													<td class="thumbnail-img">
+														<p th:text="${order.id}"></p>
+													</td>
+													<td class="name-pr">
+														<p th:text="${order.orderDate}"></p>
+													</td>
+													<td>
+														<p th:text="${order.deliveryDate}"></p>
+													</td>
+													<td class="price-pr">
+														<p><span th:inline="text">[[${#numbers.formatDecimal(order.totalPrice,
+																0, 'COMMA',
+																0,
+																'POINT')}]] ₫</span></p>
+													</td>
+													<td class="quantity-box">
+														<p th:text="${order.orderStatus}"></p>
+													</td>
+													<td>
+														<div class="col-12 d-flex shopping-box"><a
+																th:href="@{/orderDetail/{id}(id = ${order.id})}"
+																class="ml-auto btn hvr-hover">Kiểm tra</a> </div>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
 
-						<table class="table">
-							<thead>
-								<tr>
-									<th>ID</th>
-									<th>Thời điểm đặt hàng</th>
-									<th>Thời gian giao hàng dự kiến</th>
-									<th>Tổng tiền</th>
-									<th>Trạng thái</th>
-									<th>Chi tiết</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:each="order : ${orders}">
-									<td class="thumbnail-img">
-										<p th:text="${order.id}"></p>
-									</td>
-									<td class="name-pr">
-										<p th:text="${order.orderDate}"></p>
-									</td>
-									<td>
-										<p th:text="${order.deliveryDate}"></p>
-									</td>
-									<td class="price-pr">
-										<p><span th:inline="text">[[${#numbers.formatDecimal(order.totalPrice,
-												0, 'COMMA',
-												0,
-												'POINT')}]] ₫</span></p>
-									</td>
-									<td class="quantity-box">
-										<p th:text="${order.orderStatus}"></p>
-									</td>
-									<td>
-										<div class="col-12 d-flex shopping-box"><a
-												th:href="@{/orderDetail/{id}(id = ${order.id})}"
-												class="ml-auto btn hvr-hover">Kiểm tra</a> </div>
-									</td>
-								</tr>
-							</tbody>
-						</table>
+							</div>
+						</div>
+
 
 					</div>
 				</div>

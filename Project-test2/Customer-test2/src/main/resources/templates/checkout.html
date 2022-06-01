@@ -46,34 +46,79 @@
 					<div class="checkout-address">
 						<div th:if="${firstName} != null">
 							<div class="title-left">
-								<h3>Địa chỉ giao hàng</h3>
+								<h3>Thông tin giao hàng</h3>
 							</div>
-							<div class="mb-3">
-								<label for="username">Tên </label>
-								<div class="input-group">
-									<p type="text" class="form-control" th:text="${firstName}"></p>
+							<form class="needs-validation" novalidate th:action="@{/addInfo}" method="post"
+								th:object="${customer}">
+								<div class="mb-3">
+									<label for="username">Tên </label>
+									<div class="input-group">
+										<p type="text" class="form-control" th:text="${firstName}"></p>
 
+									</div>
 								</div>
-							</div>
-							<div class="mb-3">
-								<label for="username">Họ</label>
-								<div class="input-group">
-									<p type="text" class="form-control" th:text="${customer.lastName}"></p>
+								<div class="mb-3">
+									<label for="username">Họ</label>
+									<div class="input-group">
+										<p type="text" class="form-control" th:text="${customer.lastName}"></p>
+									</div>
 								</div>
-							</div>
-							<div class="mb-3">
-								<label for="phone">Số điện thoại </label>
-								<p type="phone" class="form-control" id="phone" placeholder=""
-									th:text="${customer.phoneNumber}"></p>
-							</div>
-							<div class="mb-3">
-								<label for="address">Địa chỉ </label>
-								<p type="text" class="form-control" id="address" placeholder=""
-									th:text="${customer.address}"></p>
-							</div>
-							<div class="title-left" th:if="${firstName} == null">
-								<h3>Địa chỉ giao hàng</h3>
-							</div>
+								<div class="mb-3">
+									<label for="phone">Số điện thoại </label>
+									<p type="phone" class="form-control" id="phone" placeholder=""
+										th:text="${customer.phoneNumber}"></p>
+								</div>
+								<div class="mb-3">
+									<label for="address">Địa chỉ </label>
+									<p type="text" class="form-control" id="address" placeholder=""
+										th:text="${customer.address}"></p>
+								</div>
+								<div class="title-left" th:if="${firstName} == null">
+									<h3>Địa chỉ giao hàng</h3>
+								</div>
+								<hr class="mb-4">
+								<div class="title"> <span>Phương thức thanh toán</span> </div>
+								<div class="d-block my-3">
+									<div class="custom-control custom-radio">
+										<input id="credit" name="paymentMethod" type="radio"
+											class="custom-control-input" checked required>
+										<label class="custom-control-label" for="credit">Thẻ ngân hàng</label>
+									</div>
+									<div class="custom-control custom-radio">
+										<input id="debit" name="paymentMethod" type="radio" class="custom-control-input"
+											required>
+										<label class="custom-control-label" for="debit">Tiền mặt</label>
+									</div>
+								</div>
+								<div class="byBank">
+									<div class="row">
+										<div class="col-md-6 mb-3">
+											<label for="cc-name">Tên chủ thẻ</label>
+											<input type="text" class="form-control" id="cc-name" placeholder=""
+												required>
+											<small class="text-muted">Họ và tên chủ thẻ</small>
+											<div class="invalid-feedback"> Vui lòng nhập tên chủ thẻ. </div>
+										</div>
+										<div class="col-md-6 mb-3">
+											<label for="cc-number">Số thẻ</label>
+											<input type="text" class="form-control" id="cc-number" placeholder=""
+												required>
+											<div class="invalid-feedback"> Vui lòng nhập số thẻ. </div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6 mb-3">
+											<label for="cc-expiration">CVV</label>
+											<input type="text" class="form-control" id="cc-cvv" placeholder="" required>
+											<div class="invalid-feedback"> Vui lòng nhập mã bảo mật </div>
+										</div>
+									</div>
+								</div>
+								<hr class="mb-1">
+								<div class="col-12 d-flex shopping-box"> <input type="submit" value="Cập nhật"
+										class="ml-auto btn hvr-hover">
+								</div>
+							</form>
 						</div>
 						<form class="needs-validation" novalidate th:if="${firstName} == null" th:action="@{/addInfo}"
 							method="post" th:object="${customer}">

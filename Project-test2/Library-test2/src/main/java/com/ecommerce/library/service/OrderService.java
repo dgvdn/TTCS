@@ -16,8 +16,10 @@ public interface OrderService {
 	List<Order> findByCustomer(Customer customer);
 
 	Order findById(Long id);
-	
+
 	List<Order> findAll();
-	
+
 	Order confirm(Order order);
+
+	Order done(Order order, Date date);
 }

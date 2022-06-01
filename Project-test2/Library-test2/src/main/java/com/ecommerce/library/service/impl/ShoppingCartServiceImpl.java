@@ -24,11 +24,13 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	@Override
 	public ShoppingCart addItemToCart(Product product, int quantity, Customer customer) {
 		ShoppingCart cart = customer.getShoppingCart();
+		// customer don't have ShoppingCart
 		if (cart == null) {
 			cart = new ShoppingCart();
 		}
 		Set<CartItem> cartItems = cart.getCartItem();
 		CartItem cartItem = findCartItem(cartItems, product.getId());
+		// ShoppingCart empty
 		if (cartItems == null) {
 			cartItems = new HashSet<>();
 			if (cartItem == null) {

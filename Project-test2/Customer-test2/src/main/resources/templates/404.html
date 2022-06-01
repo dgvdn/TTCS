@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<!-- Basic -->
+
+<head th:replace="fragments::head">
+	<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+	<div class="container-fluid position-relative d-flex p-0  justify-content-center">
+		<!-- Spinner Start -->
+		<div id="spinner"
+			class="show bg-dark position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+			<div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+				<span class="sr-only">Loading...</span>
+			</div>
+		</div>
+		<!-- Spinner End -->
+		<!-- Content Start -->
+		<div class="content">
+			<!-- 404 Start -->
+			<div class="container-fluid pt-4 px-4">
+				<div class="row vh-100 rounded align-items-center justify-content-center mx-0">
+					<div class="col-sm-6 text-center p-4">
+						<i class="bi bi-exclamation-triangle display-1 text-primary"></i>
+						<h1 class="display-1 fw-bold">404</h1>
+						<h1 class="mb-4">Page Not Found</h1>
+						<p class="mb-4">Có thể liên kết đã hỏng hoặc trang đã bị gỡ. Hãy kiểm tra xem liên kết mà bạn
+							đang cố mở có chính xác không.</p>
+						<a class="btn btn-link m-2 rounded-pill py-3 px-5" th:href="@{/home}">Trở về trang chủ</a>
+					</div>
+				</div>
+			</div>
+			<!-- 404 End -->
+		</div>
+		<!-- Content End -->
+	</div>
+	<div th:replace="fragments::script"></div>
+</body>
+
+</html>

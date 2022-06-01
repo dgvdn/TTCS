@@ -2,6 +2,7 @@ package com.ecommerce.customer.controller;
 
 import java.security.Principal;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -102,6 +103,7 @@ public class OrderController {
 		if (list == null) {
 			model.addAttribute("check", "Chưa có sản phẩm nào trong giỏ hàng.");
 		}
+		Collections.reverse(list);
 		model.addAttribute("orders", list);
 		model.addAttribute("title", "Theo dõi đơn hàng");
 		return "tracking";

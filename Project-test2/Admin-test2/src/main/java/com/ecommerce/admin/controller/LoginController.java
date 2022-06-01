@@ -16,88 +16,95 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.security.Principal;
+
 import javax.validation.Valid;
 
 @Controller
 public class LoginController {
-    @Autowired
-    private AdminServiceImpl adminService;
+	@Autowired
+	private AdminServiceImpl adminService;
 
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 
-    @GetMapping(value = {"/login","/",""})
-    public String loginForm(Model model){
-        model.addAttribute("title", "Đăng nhập");
-        return "login";
-    }
+	@GetMapping(value = { "/login", "/", "" })
+	public String loginForm(Model model,Principal principal) {
+		if(principal == null) {
+			model.addAttribute("title", "Đăng nhập");
+			return "login";
+		}
+		model.addAttribute("title", "Trang chủ");
+		return "index";
+		
+		
+	}
 
-    @RequestMapping("/index")
-    public String home(Model model){
-        model.addAttribute("title", "Trang chủ");
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(authentication == null || authentication instanceof  AnonymousAuthenticationToken){
-            return "redirect:/login";
-        }
-        return "index";
-    }
+	@RequestMapping("/index")
+	public String home(Model model) {
+		model.addAttribute("title", "Trang chủ");
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+			return "redirect:/login";
+		}
+		return "index";
+	}
 
-   @GetMapping("/register")
-    public String register(Model model){
-        model.addAttribute("title", "Đăng ký");
-        model.addAttribute("adminDto", new AdminDto());
-        return "register";
-   }
+	@GetMapping("/register")
+	public String register(Model model) {
+		model.addAttribute("title", "Đăng ký");
+		model.addAttribute("adminDto", new AdminDto());
+		return "register";
+	}
 
-   @GetMapping("/forgot-password")
-    public String forgotPassword(Model model){
-        model.addAttribute("title", "Quên mật khẩu");
-        return "forgot-password";
-   }
+	@GetMapping("/forgot-password")
+	public String forgotPassword(Model model) {
+		model.addAttribute("title", "Quên mật khẩu");
+		return "forgot-password";
+	}
 
-   @PostMapping("/register-new")
-   public String addNewAdmin(@Valid @ModelAttribute("adminDto")AdminDto adminDto,
-                             BindingResult result,
-                             Model model){
+	@PostMapping("/register-new")
+	public String addNewAdmin(@Valid @ModelAttribute("adminDto") AdminDto adminDto, BindingResult result, Model model) {
 
-        try {
+		try {
 
-            if(result.hasErrors()){
-                model.addAttribute("adminDto", adminDto);
-                result.toString();
-                return "register";
-            }
-            String username = adminDto.getUsername();
-            Admin admin = adminService.findByUsername(username);
-            if(admin != null){
-                model.addAttribute("adminDto", adminDto);
-                System.out.println("admin not null");
-               model.addAttribute("emailError", "Email đăng ký đã tồn tại!");
-                return "register";
-            }
-            if(adminDto.getPassword().equals(adminDto.getRepeatPassword())){
-                adminDto.setPassword(passwordEncoder.encode(adminDto.getPassword()));
-                adminService.save(adminDto);
-                System.out.println("success");
-               model.addAttribute("success", "Đăng ký thành công!");
-                model.addAttribute("adminDto", adminDto);
-            }else{
-                model.addAttribute("adminDto", adminDto);
-                model.addAttribute("passwordError", "Vui lòng kiểm tra lại mật khẩu!");
-                System.out.println("password not same");
-                return "register";
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-            model.addAttribute("errors", "Lỗi server!");
-        }
-        return "register";
+			if (result.hasErrors()) {
+				model.addAttribute("adminDto", adminDto);
+				result.toString();
+				return "register";
+			}
+			String username = adminDto.getUsername();
+			Admin admin = adminService.findByUsername(username);
+			if (admin != null) {
+				model.addAttribute("adminDto", adminDto);
+				System.out.println("admin not null");
+				model.addAttribute("emailError", "Email đăng ký đã tồn tại!");
+				return "register";
+			}
+			if (adminDto.getPassword().equals(adminDto.getRepeatPassword())) {
+				adminDto.setPassword(passwordEncoder.encode(adminDto.getPassword()));
+				adminService.save(adminDto);
+				System.out.println("success");
+				model.addAttribute("success", "Đăng ký thành công!");
+				model.addAttribute("adminDto", adminDto);
+			} else {
+				model.addAttribute("adminDto", adminDto);
+				model.addAttribute("passwordError", "Vui lòng kiểm tra lại mật khẩu!");
+				System.out.println("password not same");
+				return "register";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("errors", "Lỗi server!");
+		}
+		return "register";
 
-   }
+	}
 
-
-
-
-
+	@GetMapping("/home")
+	public String blank(Model model) {
+		model.addAttribute("title", "Trang chủ");
+		return "index";
+	}
 
 }

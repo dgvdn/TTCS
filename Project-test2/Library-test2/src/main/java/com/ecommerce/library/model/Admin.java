@@ -26,7 +26,7 @@ public class Admin {
 
 	private String password;
 
-	@Lob
+	@Lob //store large object
 	@Column(columnDefinition = "MEDIUMBLOB")
 	private String image;
 

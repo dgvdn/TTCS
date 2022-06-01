@@ -36,6 +36,7 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	private ProductService productService;
 
+	// ShoppingCart to Order , CartItem to OrderDetail
 	@Override
 	public Order checkout(ShoppingCart cart) {
 		Order order = new Order();
@@ -71,6 +72,7 @@ public class OrderServiceImpl implements OrderService {
 		return orderRepository.findByCustomer(customer);
 	}
 
+	// update status by customer
 	@Override
 	public List<Order> updateStatus(Customer customer, Date now) {
 		List<Order> order = orderRepository.findByCustomer(customer);
@@ -105,19 +107,29 @@ public class OrderServiceImpl implements OrderService {
 		return list;
 	}
 
+	// update status by admin
 	@Override
 	public Order confirm(Order order) {
 		order.setOrderStatus("Đơn hàng đang được vận chuyển.");
 		List<OrderDetail> details = order.getOrderDetailList();
 		for (OrderDetail detail : details) {
 			Product product = detail.getProduct();
+			// reduce product quantity
 			int sub = product.getCurrentQuantity() - detail.getQuantity();
-			if(sub == 0) {
+			// if quantity equals 0 set_activated = false
+			if (sub == 0) {
 				product.set_activated(false);
 			}
 			product.setCurrentQuantity(sub);
 			productService.save(product);
 		}
+		return orderRepository.save(order);
+	}
+
+	@Override
+	public Order done(Order order, Date date) {
+		order.setOrderStatus("Đơn hàng đã hoàn thành.");
+		order.setDeliveryDate(date);
 		return orderRepository.save(order);
 	}
 }

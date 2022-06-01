@@ -1,6 +1,8 @@
 package com.ecommerce.admin.controller;
 
 import java.security.Principal;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +33,7 @@ public class OrderController {
 		if (list == null) {
 			model.addAttribute("check", "Chưa có sản phẩm nào trong giỏ hàng.");
 		}
+		Collections.reverse(list);
 		model.addAttribute("orders", list);
 		model.addAttribute("title", "Quản lý đơn hàng");
 		return "order";
@@ -46,8 +49,8 @@ public class OrderController {
 	@GetMapping("/done/{id}")
 	public String done(Model model, @PathVariable Long id, HttpServletRequest request) {
 		Order order = orderService.findById(id);
-		order.setOrderStatus("Đơn hàng đã hoàn thành.");
-		orderRepository.save(order);
+		Date now = new Date();
+		orderService.done(order, now);
 		return "redirect:" + request.getHeader("Referer");
 	}
 
@@ -60,6 +63,7 @@ public class OrderController {
 		return "order-detail";
 
 	}
+
 	@GetMapping("/customer/{id}")
 	public String checkCustomer(Model model, @PathVariable("id") Long id) {
 		Order order = orderService.findById(id);

@@ -54,8 +54,8 @@
 							<tbody>
 								<tr th:each="order : ${orders}">
 									<td class="thumbnail-img">
-									<a th:href="@{/customer/{id} (id = ${order.id})}">
-										<p th:text="${order.customer.firstName}"></p>
+									<a th:href="@{/customer/{id} (id = ${order.id})}" >
+										<p th:text="${order.customer.firstName}" class="btn btn-info m-2"></p>
 									</a>
 									</td>
 									<td class="name-pr">
@@ -85,7 +85,7 @@
 									</td>
 									<td>
 										<a th:href="@{/view/{id} (id = ${order.id})}"
-											class="btn btn-warning">Xem</a>
+											class="btn btn-dark m-2">Xem</a>
 									</td>
 								</tr>
 							</tbody>

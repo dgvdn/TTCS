@@ -1,6 +1,5 @@
 package com.ecommerce.customer.controller;
 
-import com.ecommerce.library.dto.ProductDto;
 import com.ecommerce.library.model.Category;
 import com.ecommerce.library.model.Customer;
 import com.ecommerce.library.model.Product;
@@ -12,9 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,26 +25,6 @@ public class HomeController {
 
 	@Autowired
 	private CustomerService customerService;
-
-	@GetMapping("/")
-	public String home(Model model, Principal principal) {
-		if (principal == null) {
-			ShoppingCart cart = new ShoppingCart();
-
-			model.addAttribute("shoppingCart", cart);
-		} else {
-			String username = principal.getName();
-			Customer customer = customerService.findByUsername(username);
-			ShoppingCart cart = customer.getShoppingCart();
-			if (cart == null) {
-				cart = new ShoppingCart();
-				model.addAttribute("check", "Chưa có sản phẩm nào trong giỏ hàng.");
-			}
-			model.addAttribute("shoppingCart", cart);
-		}
-		model.addAttribute("title", "Go Food");
-		return "index";
-	}
 
 	@GetMapping("/home")
 	public String index(Model model, Principal principal) {
